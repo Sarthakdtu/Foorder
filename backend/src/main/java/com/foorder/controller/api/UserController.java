@@ -1,10 +1,13 @@
 package com.foorder.controller.api;
 
-import com.foorder.model.UserProfile;
+import com.foorder.common.object.user.ImmutableUserProfile;
+import com.foorder.common.object.user.UserProfile;
 import com.foorder.service.UserProfileService;
-import com.foorder.utils.LoggerService;
-import org.json.JSONException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -14,6 +17,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/user-profile")
 public class UserController {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     UserProfileService userProfileService;
@@ -26,13 +31,13 @@ public class UserController {
     }
 
     @GetMapping("/get")
-    public UserProfile getUserProfileByName(@RequestParam String username) throws SQLException, JSONException {
-        UserProfile userProfile = null;
+    public ImmutableUserProfile getUserProfileByName(@RequestParam String username) throws SQLException, JSONException {
+        ImmutableUserProfile userProfile = null;
         try{
             userProfile = userProfileService.getUserProfileById(username);
         }
         catch (Exception e){
-            LoggerService.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return userProfile;
     }
@@ -44,7 +49,7 @@ public class UserController {
             userProfiles = userProfileService.getAllUserProfiles();
         }
         catch (Exception e){
-            LoggerService.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return userProfiles;
     }
@@ -56,7 +61,7 @@ public class UserController {
             userProfiles = userProfileService.getUserProfilesByCity(cityName);
         }
         catch (Exception e){
-            LoggerService.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return userProfiles;
     }
@@ -69,7 +74,7 @@ public class UserController {
             userProfiles = userProfileService.getUserProfilesByStreet(streetName, cityName);
         }
         catch (Exception e){
-            LoggerService.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return userProfiles;
     }
@@ -84,7 +89,7 @@ public class UserController {
             String houseNumber = req.get("houseNumber");
             String mobileNumber = req.getOrDefault("mobileNumber", null);
             boolean isBot = Boolean.parseBoolean(req.getOrDefault("isBot", String.valueOf(false)));
-            UserProfile userProfile = UserProfile.builder()
+            ImmutableUserProfile userProfile = ImmutableUserProfile.builder()
                     .username(username)
                     .cityName(cityName)
                     .streetName(streetName)
@@ -96,21 +101,21 @@ public class UserController {
             insert = true;
         }
         catch (Exception e){
-            LoggerService.error(e.getMessage());
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
         return insert;
     }
 
     @PutMapping("/update")
-    public boolean updateUserProfile(@RequestBody UserProfile userProfile){
+    public boolean updateUserProfile(@RequestBody ImmutableUserProfile userProfile){
         boolean update = false;
         try{
             userProfileService.updateUserProfile(userProfile);
             update = true;
         }
         catch (Exception e){
-            LoggerService.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return update;
     }
@@ -124,7 +129,7 @@ public class UserController {
             delete = true;
         }
         catch (Exception e){
-            LoggerService.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return delete;
     }

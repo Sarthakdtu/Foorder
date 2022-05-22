@@ -16,7 +16,7 @@ public class FoorderEnvironment {
     }
 
     public static void main(String[] args) {
-        ImmutableBaseRestaurant restaurant = ImmutableBaseRestaurant.builder().id(UUID.randomUUID()).build();
+        ImmutableBaseRestaurant restaurant = ImmutableBaseRestaurant.builder().id("R1234").build();
 
         ImmutableBaseUser user = ImmutableBaseUser.builder().username("Sarthak").build();
         ImmutableOrderWithTime order = ImmutableOrderWithTime
