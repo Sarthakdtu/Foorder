@@ -1,0 +1,29 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+    id 'org.springframework.boot' version '2.7.0' apply false
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.foorder'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom SpringBootPlugin.BOM_COORDINATES
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    def immutablesVersion = "2.9.0"
+    annotationProcessor "org.immutables:value:$immutablesVersion" // <--- this is important
+    compileOnly "org.immutables:value:$immutablesVersion"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}

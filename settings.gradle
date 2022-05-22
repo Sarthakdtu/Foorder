@@ -1,0 +1,5 @@
+rootProject.name = 'foorder'
+include 'backend'
+include 'kafka-producer'
+include 'foorder-commons'
+
