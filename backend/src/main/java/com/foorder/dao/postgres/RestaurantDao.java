@@ -1,13 +1,12 @@
 package com.foorder.dao.postgres;
 
-import com.foorder.model.Restaurant;
-
+import com.foorder.common.object.restaurant.ImmutableRestaurant;
 import java.util.List;
 
 public interface RestaurantDao {
-    public Restaurant getRestaurantById(String id);
-    public void insertRestaurant(Restaurant restaurant);
-    public void deleteRestaurant(String id);
-    public List<Restaurant> getAllRestaurantsByCity(String cityName);
-    public List<Restaurant> getAllRestaurantsByStreet(String streetName, String cityName);
+    ImmutableRestaurant getRestaurantById(String id);
+    void insertRestaurant(ImmutableRestaurant restaurant);
+    void deleteRestaurant(String id);
+    List<ImmutableRestaurant> getAllRestaurantsByCity(String cityName);
+    List<ImmutableRestaurant> getAllRestaurantsByStreet(String streetName, String cityName);
 }

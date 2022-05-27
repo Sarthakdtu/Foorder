@@ -3,6 +3,7 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 plugins {
     id 'org.springframework.boot' version '2.7.0' apply false
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'com.github.sherter.google-java-format' version '0.9'
     id 'java'
 }
 
@@ -22,6 +23,7 @@ dependencyManagement {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     def immutablesVersion = "2.9.0"
     annotationProcessor "org.immutables:value:$immutablesVersion" // <--- this is important
     compileOnly "org.immutables:value:$immutablesVersion"

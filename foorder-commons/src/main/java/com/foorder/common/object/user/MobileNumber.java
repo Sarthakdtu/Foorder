@@ -4,5 +4,5 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 public abstract class MobileNumber {
-    public abstract String number();
+  public abstract String number();
 }

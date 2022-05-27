@@ -1,18 +1,18 @@
 package com.foorder.common.object.order;
 
 public enum OrderStatus {
-    PLACED("placed"),
-    PREPARED("prepared"),
-    PICKEDUP("picked-up"),
-    DELIVERED("delivered");
+  PLACED("placed"),
+  PREPARED("prepared"),
+  PICKEDUP("picked-up"),
+  DELIVERED("delivered");
 
-    String name;
+  String name;
 
-    OrderStatus(String name){
-        this.name = name;
-    }
+  OrderStatus(String name) {
+    this.name = name;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 }

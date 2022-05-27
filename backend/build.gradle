@@ -35,11 +35,14 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.google.googlejavaformat:google-java-format:$googleJavaFormatVersion'
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
-//    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.immutables:criteria-inmemory:2.9.0'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
     implementation project(':kafka-producer')
     implementation project(':foorder-commons')

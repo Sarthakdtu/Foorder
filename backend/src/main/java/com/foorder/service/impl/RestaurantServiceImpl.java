@@ -1,21 +1,26 @@
 package com.foorder.service.impl;
 
+import com.foorder.common.object.location.ImmutableStreet;
+import com.foorder.common.object.menu.ImmutableMenu;
+import com.foorder.common.object.restaurant.ImmutableRestaurant;
 import com.foorder.dao.postgres.RestaurantDao;
-import com.foorder.model.Restaurant;
-import com.foorder.model.location.Street;
-import com.foorder.model.menu.Menu;
 import com.foorder.service.MenuService;
 import com.foorder.service.RestaurantService;
 import com.foorder.service.StreetService;
-import com.foorder.utils.LoggerService;
+
 import com.foorder.utils.RandomStrings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
+
+    private static final Logger logger = LoggerFactory.getLogger(RestaurantServiceImpl.class);
 
     @Autowired
     MenuService menuService;
@@ -27,19 +32,15 @@ public class RestaurantServiceImpl implements RestaurantService {
     StreetService streetService;
 
     @Override
-    public Restaurant getRestaurantById(String id) {
+    public ImmutableRestaurant getRestaurantById(String id) {
         return restaurantDao.getRestaurantById(id);
     }
 
     @Override
-    public void insertRestaurant(Restaurant restaurant) {
-        streetService.insertStreet(new Street(restaurant.getStreetName(),
-                                              restaurant.getCityName(),
-                                              RandomStrings.generatePincode()));
-        Menu menu = new Menu(restaurant.getId());
-        LoggerService.info("Creating menu for restaurant ID: " + restaurant.getId());
+    public void insertRestaurant(ImmutableRestaurant restaurant) {
+        ImmutableMenu menu = ImmutableMenu.builder().restaurantId(restaurant.id()).build();
+        logger.info("Creating menu for restaurant ID: {}", restaurant.id());
         menuService.insertMenu(menu);
-        LoggerService.info("Menu created");
         restaurantDao.insertRestaurant(restaurant);
     }
 
@@ -49,12 +50,12 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public List<Restaurant> getAllRestaurantsByCity(String cityName) {
+    public List<ImmutableRestaurant> getAllRestaurantsByCity(String cityName) {
         return restaurantDao.getAllRestaurantsByCity(cityName);
     }
 
     @Override
-    public List<Restaurant> getAllRestaurantsByStreet(String streetName, String cityName) {
+    public List<ImmutableRestaurant> getAllRestaurantsByStreet(String streetName, String cityName) {
         return restaurantDao.getAllRestaurantsByStreet(streetName, cityName);
     }
 }
